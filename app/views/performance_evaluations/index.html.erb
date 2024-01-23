@@ -1,0 +1,9 @@
+<h1>Performance Evaluations</h1>
+
+<ul>
+  <% @evaluations.each do |evaluation| %>
+    <li><%= link_to evaluation.employee.name, performance_evaluation_path(evaluation) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'New Performance Evaluation', new_performance_evaluation_path %>

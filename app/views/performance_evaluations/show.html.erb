@@ -1,0 +1,7 @@
+<h1><%= @evaluation.employee.name %></h1>
+
+<p>Score: <%= @evaluation.score %></p>
+<p>Feedback: <%= @evaluation.feedback %></p>
+
+<%= link_to 'Edit Performance Evaluation', edit_performance_evaluation_path(@evaluation) %>
+<%= link_to 'Back to Performance Evaluations', performance_evaluations_path %>

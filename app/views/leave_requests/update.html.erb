@@ -1,0 +1,7 @@
+<h1>Edit Leave Request</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back to Leave Request', leave_request_path(@leave_request) %>
+
+<%= button_to 'Delete Leave Request', leave_request_path(@leave_request), method: :delete, data: { confirm: 'Are you sure?' } %>

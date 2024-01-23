@@ -1,0 +1,976 @@
+  [1m[35m (11.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 05:36:19.625993', '2024-01-22 05:36:19.625996') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 07:44:32 +0100
+Started GET "/%3C%=%20BASE_URL%20%%3Efavicon.ico" for 127.0.0.1 at 2024-01-22 07:44:32 +0100
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 07:44:32 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/%3C%=%20BASE_URL%20%%3Efavicon.ico"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 07:44:33 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 07:44:33 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (13.8ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (4.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+Started GET "/api/employees" for ::1 at 2024-01-22 16:47:53 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 28ms (Views: -0.8ms | ActiveRecord: 5.0ms | Allocations: 11644)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 16:47:53 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 20ms (Views: 19.2ms | ActiveRecord: 0.1ms | Allocations: 620)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 16:47:58 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.4ms | Allocations: 618)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 16:47:58 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.1ms | Allocations: 607)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 17:02:46 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 26ms (Views: 0.5ms | ActiveRecord: 2.8ms | Allocations: 11048)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 17:02:48 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.1ms | Allocations: 618)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 17:03:13 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 2ms (Views: 1.9ms | ActiveRecord: 0.2ms | Allocations: 619)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-22 17:05:49 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 6ms (Views: 5.4ms | ActiveRecord: 0.1ms | Allocations: 618)
+
+
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 17:06:37 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 17:06:37 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 17:06:37 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started GET "/meta.json" for 127.0.0.1 at 2024-01-22 17:06:37 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/meta.json"):
+  
+Started POST "/api/employees" for ::1 at 2024-01-22 17:07:21 +0100
+Processing by Api::EmployeesController#create as HTML
+  Parameters: {"name"=>"Andrel-Davy DE PRA BIGOMBE", "email"=>"depraandrel@outlook.com", "position"=>"Dev ", "birthdate"=>"2001-04-17", "employee"=>{"name"=>"Andrel-Davy DE PRA BIGOMBE", "email"=>"depraandrel@outlook.com", "position"=>"Dev ", "birthdate"=>"2001-04-17"}}
+HTTP Origin header (http://localhost:8080) didn't match request.base_url (http://localhost:3000)
+Completed 422 Unprocessable Entity in 1ms (ActiveRecord: 0.5ms | Allocations: 536)
+
+
+  
+ActionController::InvalidAuthenticityToken (HTTP Origin header (http://localhost:8080) didn't match request.base_url (http://localhost:3000)):
+  
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:293:in `handle_unverified_request'
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:388:in `handle_unverified_request'
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:377:in `verify_authenticity_token'
+activesupport (7.1.3) lib/active_support/callbacks.rb:403:in `block in make_lambda'
+activesupport (7.1.3) lib/active_support/callbacks.rb:202:in `block (2 levels) in halting'
+actionpack (7.1.3) lib/abstract_controller/callbacks.rb:34:in `block (2 levels) in <module:Callbacks>'
+activesupport (7.1.3) lib/active_support/callbacks.rb:203:in `block in halting'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `block in invoke_before'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `each'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `invoke_before'
+activesupport (7.1.3) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+activesupport (7.1.3) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (7.1.3) lib/abstract_controller/callbacks.rb:258:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/rescue.rb:25:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/instrumentation.rb:74:in `block in process_action'
+activesupport (7.1.3) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.1.3) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (7.1.3) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.1.3) lib/action_controller/metal/instrumentation.rb:73:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/params_wrapper.rb:261:in `process_action'
+activerecord (7.1.3) lib/active_record/railties/controller_runtime.rb:32:in `process_action'
+actionpack (7.1.3) lib/abstract_controller/base.rb:160:in `process'
+actionview (7.1.3) lib/action_view/rendering.rb:40:in `process'
+actionpack (7.1.3) lib/action_controller/metal.rb:227:in `dispatch'
+actionpack (7.1.3) lib/action_controller/metal.rb:309:in `dispatch'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:51:in `block in serve'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:131:in `block in find_routes'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:124:in `each'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:124:in `find_routes'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:882:in `call'
+rack (3.0.8) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.0.8) lib/rack/etag.rb:29:in `call'
+rack (3.0.8) lib/rack/conditional_get.rb:43:in `call'
+rack (3.0.8) lib/rack/head.rb:15:in `call'
+actionpack (7.1.3) lib/action_dispatch/http/permissions_policy.rb:36:in `call'
+actionpack (7.1.3) lib/action_dispatch/http/content_security_policy.rb:33:in `call'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:272:in `context'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:266:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/cookies.rb:689:in `call'
+activerecord (7.1.3) lib/active_record/migration.rb:655:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+activesupport (7.1.3) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.1.3) lib/action_dispatch/middleware/callbacks.rb:28:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/actionable_exceptions.rb:16:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/debug_exceptions.rb:29:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (7.1.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (7.1.3) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:135:in `block in tagged'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:39:in `tagged'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:135:in `tagged'
+activesupport (7.1.3) lib/active_support/broadcast_logger.rb:240:in `method_missing'
+railties (7.1.3) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/remote_ip.rb:92:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/request_id.rb:28:in `call'
+rack (3.0.8) lib/rack/method_override.rb:28:in `call'
+rack (3.0.8) lib/rack/runtime.rb:24:in `call'
+activesupport (7.1.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:59:in `block in call'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:24:in `collect_events'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:58:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/static.rb:25:in `call'
+rack (3.0.8) lib/rack/sendfile.rb:114:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/host_authorization.rb:141:in `call'
+rack-cors (2.0.1) lib/rack/cors.rb:102:in `call'
+railties (7.1.3) lib/rails/engine.rb:536:in `call'
+puma (6.4.2) lib/puma/configuration.rb:272:in `call'
+puma (6.4.2) lib/puma/request.rb:100:in `block in handle_request'
+puma (6.4.2) lib/puma/thread_pool.rb:378:in `with_force_shutdown'
+puma (6.4.2) lib/puma/request.rb:99:in `handle_request'
+puma (6.4.2) lib/puma/server.rb:464:in `process_client'
+puma (6.4.2) lib/puma/server.rb:245:in `block in run'
+puma (6.4.2) lib/puma/thread_pool.rb:155:in `block in spawn_thread'
+Started POST "/api/employees" for ::1 at 2024-01-22 17:07:22 +0100
+Processing by Api::EmployeesController#create as HTML
+  Parameters: {"name"=>"Andrel-Davy DE PRA BIGOMBE", "email"=>"depraandrel@outlook.com", "position"=>"Dev ", "birthdate"=>"2001-04-17", "employee"=>{"name"=>"Andrel-Davy DE PRA BIGOMBE", "email"=>"depraandrel@outlook.com", "position"=>"Dev ", "birthdate"=>"2001-04-17"}}
+HTTP Origin header (http://localhost:8080) didn't match request.base_url (http://localhost:3000)
+Completed 422 Unprocessable Entity in 1ms (ActiveRecord: 0.0ms | Allocations: 510)
+
+
+  
+ActionController::InvalidAuthenticityToken (HTTP Origin header (http://localhost:8080) didn't match request.base_url (http://localhost:3000)):
+  
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:293:in `handle_unverified_request'
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:388:in `handle_unverified_request'
+actionpack (7.1.3) lib/action_controller/metal/request_forgery_protection.rb:377:in `verify_authenticity_token'
+activesupport (7.1.3) lib/active_support/callbacks.rb:403:in `block in make_lambda'
+activesupport (7.1.3) lib/active_support/callbacks.rb:202:in `block (2 levels) in halting'
+actionpack (7.1.3) lib/abstract_controller/callbacks.rb:34:in `block (2 levels) in <module:Callbacks>'
+activesupport (7.1.3) lib/active_support/callbacks.rb:203:in `block in halting'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `block in invoke_before'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `each'
+activesupport (7.1.3) lib/active_support/callbacks.rb:598:in `invoke_before'
+activesupport (7.1.3) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+activesupport (7.1.3) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (7.1.3) lib/abstract_controller/callbacks.rb:258:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/rescue.rb:25:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/instrumentation.rb:74:in `block in process_action'
+activesupport (7.1.3) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.1.3) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (7.1.3) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.1.3) lib/action_controller/metal/instrumentation.rb:73:in `process_action'
+actionpack (7.1.3) lib/action_controller/metal/params_wrapper.rb:261:in `process_action'
+activerecord (7.1.3) lib/active_record/railties/controller_runtime.rb:32:in `process_action'
+actionpack (7.1.3) lib/abstract_controller/base.rb:160:in `process'
+actionview (7.1.3) lib/action_view/rendering.rb:40:in `process'
+actionpack (7.1.3) lib/action_controller/metal.rb:227:in `dispatch'
+actionpack (7.1.3) lib/action_controller/metal.rb:309:in `dispatch'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:51:in `block in serve'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:131:in `block in find_routes'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:124:in `each'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:124:in `find_routes'
+actionpack (7.1.3) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.1.3) lib/action_dispatch/routing/route_set.rb:882:in `call'
+rack (3.0.8) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.0.8) lib/rack/etag.rb:29:in `call'
+rack (3.0.8) lib/rack/conditional_get.rb:43:in `call'
+rack (3.0.8) lib/rack/head.rb:15:in `call'
+actionpack (7.1.3) lib/action_dispatch/http/permissions_policy.rb:36:in `call'
+actionpack (7.1.3) lib/action_dispatch/http/content_security_policy.rb:33:in `call'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:272:in `context'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:266:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/cookies.rb:689:in `call'
+activerecord (7.1.3) lib/active_record/migration.rb:655:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+activesupport (7.1.3) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.1.3) lib/action_dispatch/middleware/callbacks.rb:28:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/actionable_exceptions.rb:16:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/debug_exceptions.rb:29:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (7.1.3) lib/rails/rack/logger.rb:37:in `call_app'
+railties (7.1.3) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:135:in `block in tagged'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:39:in `tagged'
+activesupport (7.1.3) lib/active_support/tagged_logging.rb:135:in `tagged'
+activesupport (7.1.3) lib/active_support/broadcast_logger.rb:240:in `method_missing'
+railties (7.1.3) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/remote_ip.rb:92:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/request_id.rb:28:in `call'
+rack (3.0.8) lib/rack/method_override.rb:28:in `call'
+rack (3.0.8) lib/rack/runtime.rb:24:in `call'
+activesupport (7.1.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:59:in `block in call'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:24:in `collect_events'
+actionpack (7.1.3) lib/action_dispatch/middleware/server_timing.rb:58:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/static.rb:25:in `call'
+rack (3.0.8) lib/rack/sendfile.rb:114:in `call'
+actionpack (7.1.3) lib/action_dispatch/middleware/host_authorization.rb:141:in `call'
+rack-cors (2.0.1) lib/rack/cors.rb:102:in `call'
+railties (7.1.3) lib/rails/engine.rb:536:in `call'
+puma (6.4.2) lib/puma/configuration.rb:272:in `call'
+puma (6.4.2) lib/puma/request.rb:100:in `block in handle_request'
+puma (6.4.2) lib/puma/thread_pool.rb:378:in `with_force_shutdown'
+puma (6.4.2) lib/puma/request.rb:99:in `handle_request'
+puma (6.4.2) lib/puma/server.rb:464:in `process_client'
+puma (6.4.2) lib/puma/server.rb:245:in `block in run'
+puma (6.4.2) lib/puma/thread_pool.rb:155:in `block in spawn_thread'
+Started GET "/api/employees" for ::1 at 2024-01-22 17:07:44 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 20ms (Views: 0.8ms | ActiveRecord: 1.0ms | Allocations: 11048)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "announcements"[0m
+  [1m[35m (11.3ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "employees"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "leave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "performance_evaluations"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aannouncements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_posted_by_id" ON "aannouncements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_concerned_position_id" ON "aannouncements" ("concerned_position_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "aannouncements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "announcements"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mDROP TABLE "announcements"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "announcements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "aannouncements"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aannouncements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aannouncements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_posted_by_id" ON "aannouncements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_concerned_position_id" ON "aannouncements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aannouncements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "announcements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "announcements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "announcements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "aannouncements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aannouncements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aleave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer DEFAULT NULL, "request_date" date DEFAULT NULL, "leave_start_date" date DEFAULT NULL, "leave_end_date" date DEFAULT NULL, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aleave_requests_on_employee_id" ON "aleave_requests" ("employee_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aleave_requests" ("id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at")
+                     SELECT "id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at" FROM "leave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "leave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer DEFAULT NULL, "request_date" date DEFAULT NULL, "leave_start_date" date DEFAULT NULL, "leave_end_date" date DEFAULT NULL, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "leave_requests" ("id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at")
+                     SELECT "id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at" FROM "aleave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aleave_requests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aperformance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_reviewer_id" ON "aperformance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_employee_reviewed_id" ON "aperformance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aperformance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "performance_evaluations"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "performance_evaluations"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "aperformance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aperformance_evaluations"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aperformance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_reviewer_id" ON "aperformance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_employee_reviewed_id" ON "aperformance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aperformance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "aperformance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aperformance_evaluations"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240122144849)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20240122144842),
+(20240122144820),
+(20240122144711);[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:16:06.741583', '2024-01-22 16:16:06.741586') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'db77a0108d13e689adfa7819f5b972954107f2e3', '2024-01-22 16:16:06.744491', '2024-01-22 16:16:06.744493') RETURNING "key"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "announcements"[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "employees"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "leave_requests"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "performance_evaluations"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aannouncements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_posted_by_id" ON "aannouncements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_concerned_position_id" ON "aannouncements" ("concerned_position_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aannouncements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "announcements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "announcements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "announcements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "aannouncements"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "aannouncements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aannouncements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_posted_by_id" ON "aannouncements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aannouncements_on_concerned_position_id" ON "aannouncements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aannouncements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "announcements"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "announcements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date DEFAULT NULL, "title" varchar DEFAULT NULL, "message" text DEFAULT NULL, "posted_by_id" integer DEFAULT NULL, "concerned_position_id" integer DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "announcements" ("id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at")
+                     SELECT "id","publication_date","title","message","posted_by_id","concerned_position_id","created_at","updated_at" FROM "aannouncements"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aannouncements"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aleave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer DEFAULT NULL, "request_date" date DEFAULT NULL, "leave_start_date" date DEFAULT NULL, "leave_end_date" date DEFAULT NULL, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aleave_requests_on_employee_id" ON "aleave_requests" ("employee_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aleave_requests" ("id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at")
+                     SELECT "id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at" FROM "leave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "leave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer DEFAULT NULL, "request_date" date DEFAULT NULL, "leave_start_date" date DEFAULT NULL, "leave_end_date" date DEFAULT NULL, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "leave_requests" ("id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at")
+                     SELECT "id","employee_id","request_date","leave_start_date","leave_end_date","response","created_at","updated_at" FROM "aleave_requests"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aleave_requests"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.5ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aperformance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_reviewer_id" ON "aperformance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_employee_reviewed_id" ON "aperformance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aperformance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "aperformance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aperformance_evaluations"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aperformance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_reviewer_id" ON "aperformance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aperformance_evaluations_on_employee_reviewed_id" ON "aperformance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aperformance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "performance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date DEFAULT NULL, "employee_reviewed_id" integer DEFAULT NULL, "reviewer_id" integer DEFAULT NULL, "note" integer DEFAULT NULL, "commentary" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at")
+                     SELECT "id","evaluation_date","employee_reviewed_id","reviewer_id","note","commentary","created_at","updated_at" FROM "aperformance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aperformance_evaluations"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240122144849)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20240122144842),
+(20240122144820),
+(20240122144711);[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:16:06.887787', '2024-01-22 16:16:06.887790') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Update (0.1ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-01-22 16:16:06.889309' WHERE "ar_internal_metadata"."key" = 'environment'[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'db77a0108d13e689adfa7819f5b972954107f2e3', '2024-01-22 16:16:06.891245', '2024-01-22 16:16:06.891246') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:18:24.696957', '2024-01-22 16:18:24.696960') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:22:43.025875', '2024-01-22 16:22:43.025878') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:27:04.523381', '2024-01-22 16:27:04.523384') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:31:30.713618', '2024-01-22 16:31:30.713621') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-01-22 16:31:42.436654', '2024-01-22 16:31:42.436657') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20240122144711)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (10.6ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "LDAP" integer, "name" varchar, "email" varchar, "position" varchar, "birthdate" date, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144711') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAnnouncements (20240122144820)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "announcements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "publication_date" date, "title" varchar, "message" text, "posted_by_id" integer, "concerned_position_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_65ba8d8307"
+FOREIGN KEY ("posted_by_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_e6f3117fd4"
+FOREIGN KEY ("concerned_position_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_posted_by_id" ON "announcements" ("posted_by_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_announcements_on_concerned_position_id" ON "announcements" ("concerned_position_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144820') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePerformanceEvaluations (20240122144842)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "performance_evaluations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "evaluation_date" date, "employee_reviewed_id" integer, "reviewer_id" integer, "note" integer, "commentary" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2a46c47913"
+FOREIGN KEY ("employee_reviewed_id")
+  REFERENCES "employees" ("id")
+, CONSTRAINT "fk_rails_c1ae931102"
+FOREIGN KEY ("reviewer_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_employee_reviewed_id" ON "performance_evaluations" ("employee_reviewed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_performance_evaluations_on_reviewer_id" ON "performance_evaluations" ("reviewer_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144842') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateLeaveRequests (20240122144849)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "leave_requests" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "employee_id" integer, "request_date" date, "leave_start_date" date, "leave_end_date" date, "response" varchar DEFAULT 'pending', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1554fc19c3"
+FOREIGN KEY ("employee_id")
+  REFERENCES "employees" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_leave_requests_on_employee_id" ON "leave_requests" ("employee_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122144849') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Create (1.3ms)[0m  [1m[32mINSERT INTO "employees" ("LDAP", "name", "email", "position", "birthdate", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["LDAP", 117474512], ["name", "John Doe"], ["email", "john.doe@example.com"], ["position", "Developer"], ["birthdate", "1990-01-01"], ["created_at", "2024-01-22 16:37:08.296066"], ["updated_at", "2024-01-22 16:37:08.296066"]]
+  [1m[36mTRANSACTION (4.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Create (1.0ms)[0m  [1m[32mINSERT INTO "employees" ("LDAP", "name", "email", "position", "birthdate", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["LDAP", 874559846], ["name", "Jane Doe"], ["email", "jane.doe@example.com"], ["position", "Designer"], ["birthdate", "1992-03-15"], ["created_at", "2024-01-22 16:37:08.307238"], ["updated_at", "2024-01-22 16:37:08.307238"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ? OFFSET ?[0m  [["LIMIT", 1], ["OFFSET", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAnnouncement Create (1.8ms)[0m  [1m[32mINSERT INTO "announcements" ("publication_date", "title", "message", "posted_by_id", "concerned_position_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["publication_date", "2022-01-01"], ["title", "Important Announcement"], ["message", "Lorem ipsum..."], ["posted_by_id", 1], ["concerned_position_id", 2], ["created_at", "2024-01-22 16:37:08.336518"], ["updated_at", "2024-01-22 16:37:08.336518"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAnnouncement Create (1.2ms)[0m  [1m[32mINSERT INTO "announcements" ("publication_date", "title", "message", "posted_by_id", "concerned_position_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["publication_date", "2022-02-01"], ["title", "Upcoming Event"], ["message", "Lorem ipsum..."], ["posted_by_id", 2], ["concerned_position_id", 1], ["created_at", "2024-01-22 16:37:08.341024"], ["updated_at", "2024-01-22 16:37:08.341024"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPerformanceEvaluation Create (0.8ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("evaluation_date", "employee_reviewed_id", "reviewer_id", "note", "commentary", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["evaluation_date", "2022-03-01"], ["employee_reviewed_id", 1], ["reviewer_id", 2], ["note", 4], ["commentary", "Good performance"], ["created_at", "2024-01-22 16:37:08.364925"], ["updated_at", "2024-01-22 16:37:08.364925"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPerformanceEvaluation Create (0.9ms)[0m  [1m[32mINSERT INTO "performance_evaluations" ("evaluation_date", "employee_reviewed_id", "reviewer_id", "note", "commentary", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["evaluation_date", "2022-04-01"], ["employee_reviewed_id", 2], ["reviewer_id", 1], ["note", 5], ["commentary", "Excellent performance"], ["created_at", "2024-01-22 16:37:08.367458"], ["updated_at", "2024-01-22 16:37:08.367458"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mLeaveRequest Create (1.6ms)[0m  [1m[32mINSERT INTO "leave_requests" ("employee_id", "request_date", "leave_start_date", "leave_end_date", "response", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["employee_id", 1], ["request_date", "2022-05-01"], ["leave_start_date", "2022-06-01"], ["leave_end_date", "2022-06-07"], ["response", "pending"], ["created_at", "2024-01-22 16:37:08.390742"], ["updated_at", "2024-01-22 16:37:08.390742"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mLeaveRequest Create (1.2ms)[0m  [1m[32mINSERT INTO "leave_requests" ("employee_id", "request_date", "leave_start_date", "leave_end_date", "response", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["employee_id", 2], ["request_date", "2022-05-15"], ["leave_start_date", "2022-06-15"], ["leave_end_date", "2022-06-21"], ["response", "approved"], ["created_at", "2024-01-22 16:37:08.395545"], ["updated_at", "2024-01-22 16:37:08.395545"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mLeaveRequest Create (1.0ms)[0m  [1m[32mINSERT INTO "leave_requests" ("employee_id", "request_date", "leave_start_date", "leave_end_date", "response", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["employee_id", 1], ["request_date", "2022-06-01"], ["leave_start_date", "2022-07-01"], ["leave_end_date", "2022-07-07"], ["response", "canceled"], ["created_at", "2024-01-22 16:37:08.399265"], ["updated_at", "2024-01-22 16:37:08.399265"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/api/employees" for ::1 at 2024-01-22 17:37:36 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:6:in `index'
+Completed 200 OK in 74ms (Views: 51.8ms | ActiveRecord: 2.0ms | Allocations: 22814)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20240122165948)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime(6), "remember_created_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240122165948') RETURNING "version"[0m
+  [1m[36mTRANSACTION (5.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

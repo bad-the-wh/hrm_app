@@ -1,0 +1,15 @@
+<%= form_with(model: @evaluation, local: true) do |form| %>
+  <div>
+    <%= form.label :note %>
+    <%= form.number_field :note %>
+  </div>
+
+  <div>
+    <%= form.label :commentary %>
+    <%= form.text_area :commentary %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

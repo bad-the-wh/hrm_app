@@ -1,0 +1,7 @@
+<h1>Edit Performance Evaluation</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back to Performance Evaluation', performance_evaluation_path(@evaluation) %>
+
+<%= button_to 'Delete Performance Evaluation', performance_evaluation_path(@evaluation), method: :delete, data: { confirm: 'Are you sure?' } %>

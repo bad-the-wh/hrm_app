@@ -1,0 +1,25 @@
+<%= form_for(@employee) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :position %>
+    <%= f.text_field :position %>
+  </div>
+
+  <div>
+    <%= f.label :birthdate %>
+    <%= f.date_field :birthdate %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

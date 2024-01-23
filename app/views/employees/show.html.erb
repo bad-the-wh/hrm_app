@@ -1,0 +1,8 @@
+<h1><%= @employee.name %></h1>
+
+<p>Email: <%= @employee.email %></p>
+<p>Position: <%= @employee.position %></p>
+<p>Birthdate: <%= @employee.birthdate %></p>
+
+<%= link_to 'Edit Employee', edit_employee_path(@employee) %>
+<%= link_to 'Back to Employee List', employees_path %>

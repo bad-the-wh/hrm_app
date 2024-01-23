@@ -1,0 +1,7 @@
+<h1><%= @announcement.title %></h1>
+
+<p>Content: <%= @announcement.content %></p>
+<p>Published at: <%= @announcement.published_at %></p>
+
+<%= link_to 'Edit Announcement', edit_announcement_path(@announcement) %>
+<%= link_to 'Back to Announcements', announcements_path %>

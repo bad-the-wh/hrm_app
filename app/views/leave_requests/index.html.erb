@@ -1,0 +1,9 @@
+<h1>Leave Requests</h1>
+
+<ul>
+  <% @leave_requests.each do |leave_request| %>
+    <li><%= link_to leave_request.employee.name, leave_request_path(leave_request) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'New Leave Request', new_leave_request_path %>
