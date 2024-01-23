@@ -6,4 +6,5 @@
   <% end %>
 </ul>
 
-<%= link_to 'New Leave Request', new_leave_request_path %>
+<% if user_signed_in? %>
+    <%= link_to 'New Leave Request', new_leave_request_path %>

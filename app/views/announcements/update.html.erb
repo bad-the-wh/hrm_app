@@ -1,0 +1,7 @@
+<h1>Edit Announcement</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back to Announcement', announcement_path(@announcement) %>
+
+<%= button_to 'Delete Announcement', announcement_path(@announcement), method: :delete, data: { confirm: 'Are you sure?' } %>

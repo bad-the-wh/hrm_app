@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         fetchAnnouncement() {
-            axios.get(`/api/announcements/${this.$route.params.id}`)
+            axios.get(`http:://localhost:3000/api/announcements/${this.$route.params.id}`)
                 .then(response => {
                     this.announcement = response.data;
                     console.log('Announcement:', this.announcement);

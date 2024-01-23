@@ -3,7 +3,8 @@
         <h1>Edit Announcement</h1>
 
         <announcement-form />
-        <router-link :to="{ name: 'AnnouncementDetail', params: { id: announcement.id } }">Back to Announcement</router-link>
+        <router-link :to="{ name: 'AnnouncementDetail', params: { id: announcement.id } }">Back to
+            Announcement</router-link>
 
         <button @click="deleteAnnouncement">Delete Announcement</button>
     </div>
@@ -27,7 +28,7 @@ export default {
     },
     methods: {
         fetchAnnouncement() {
-            axios.get(`/api/announcements/${this.$route.params.id}`)
+            axios.get(`http:://localhost:3000/api/announcements/${this.$route.params.id}`)
                 .then(response => {
                     this.announcement = response.data;
                     console.log('Announcement:', this.announcement);

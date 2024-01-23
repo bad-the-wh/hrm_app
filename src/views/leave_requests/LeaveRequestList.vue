@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         fetchLeaveRequests() {
-            axios.get('/api/leave_requests')
+            axios.get('http:://localhost:3000/api/leave_requests')
                 .then(response => {
                     this.leaveRequests = response.data;
                     console.log('Leave Requests:', this.leaveRequests);

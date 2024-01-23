@@ -4,5 +4,8 @@
 <p>End Date: <%= @leave_request.end_date %></p>
 <p>Reason: <%= @leave_request.reason %></p>
 
-<%= link_to 'Edit Leave Request', edit_leave_request_path(@leave_request) %>
+<% if user_signed_in? %>
+    <%= link_to 'Edit Leave Request', edit_leave_request_path(@leave_request) %>
+<% end %>
+
 <%= link_to 'Back to Leave Requests', leave_requests_path %>

@@ -38,7 +38,7 @@ export default {
         submitForm() {
             // Make an axios call to submit the form data
             // Replace the following line with your actual API endpoint
-            axios.post('/api/leave_requests', this.leaveRequest)
+            axios.post('http:://localhost:3000/api/leave_requests', this.leaveRequest)
                 .then(response => {
                     // Handle success if needed
                     console.log('Leave Request submitted successfully', response);

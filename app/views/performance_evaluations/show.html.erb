@@ -3,5 +3,8 @@
 <p>Score: <%= @evaluation.score %></p>
 <p>Feedback: <%= @evaluation.feedback %></p>
 
-<%= link_to 'Edit Performance Evaluation', edit_performance_evaluation_path(@evaluation) %>
+<% if user_signed_in? %>
+    <%= link_to 'Edit Performance Evaluation', edit_performance_evaluation_path(@evaluation) %>
+<% end %>
+
 <%= link_to 'Back to Performance Evaluations', performance_evaluations_path %>

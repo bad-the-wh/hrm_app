@@ -38,7 +38,7 @@ export default {
         submitForm() {
             // Make an axios call to submit the form data
             // Replace the following line with your actual API endpoint
-            axios.post('/api/announcements', this.announcement)
+            axios.post('http:://localhost:3000/api/announcements', this.announcement)
                 .then(response => {
                     // Handle success if needed
                     console.log('Announcement submitted successfully', response);

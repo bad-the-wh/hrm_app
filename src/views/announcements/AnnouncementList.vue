@@ -10,7 +10,7 @@
             </li>
         </ul>
 
-        <router-link to="/announcements/new">New Announcement</router-link>
+        <router-link to="http:://localhost:3000/announcements/new">New Announcement</router-link>
     </div>
 </template>
   

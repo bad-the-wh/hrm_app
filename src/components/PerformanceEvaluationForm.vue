@@ -32,7 +32,7 @@ export default {
         submitForm() {
             // Make an axios call to submit the form data
             // Replace the following line with your actual API endpoint
-            axios.post('/api/performance_evaluations', this.performanceEvaluation)
+            axios.post('http:://localhost:3000/api/performance_evaluations', this.performanceEvaluation)
                 .then(response => {
                     // Handle success if needed
                     console.log('Performance Evaluation submitted successfully', response);

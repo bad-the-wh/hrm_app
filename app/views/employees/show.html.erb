@@ -4,5 +4,7 @@
 <p>Position: <%= @employee.position %></p>
 <p>Birthdate: <%= @employee.birthdate %></p>
 
-<%= link_to 'Edit Employee', edit_employee_path(@employee) %>
+<% if user_signed_in? %>
+    <%= link_to 'Edit Employee', edit_employee_path(@employee) %>
+<% end %>
 <%= link_to 'Back to Employee List', employees_path %>

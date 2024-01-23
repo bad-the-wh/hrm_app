@@ -2,6 +2,7 @@
     <div>
         <h1>{{ employee.name }}</h1>
 
+        <p>Email: {{ employee.LDAP }}</p>
         <p>Email: {{ employee.email }}</p>
         <p>Position: {{ employee.position }}</p>
         <p>Birthdate: {{ employee.birthdate }}</p>

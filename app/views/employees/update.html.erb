@@ -3,3 +3,5 @@
 <%= render 'form' %>
 
 <%= link_to 'Back to Employee', employee_path(@employee) %>
+
+<%= button_to 'Delete Employee', employee_path(@employee), method: :delete, data: { confirm: 'Are you sure?' } %>

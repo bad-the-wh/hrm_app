@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         fetchLeaveRequest() {
-            axios.get(`/api/leave_requests/${this.$route.params.id}`)
+            axios.get(`http:://localhost:3000/api/leave_requests/${this.$route.params.id}`)
                 .then(response => {
                     this.leaveRequest = response.data;
                     console.log('Leave Request:', this.leaveRequest);

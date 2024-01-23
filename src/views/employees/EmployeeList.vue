@@ -5,7 +5,11 @@
     <div v-if="loading">Loading...</div>
 
     <ul v-else-if="employees.length > 0">
-      <li v-for="employee in employees" :key="employee.id">{{ employee.name }}</li>
+      <li v-for="employee in employees" :key="employee.id">
+        <router-link :to="{ name: 'EmployeeDetail', params: { id: employee.id } }">
+          {{ employee.name }} - {{ employee.position }} ({{ employee.LDAP }})
+        </router-link>
+      </li>
     </ul>
 
     <div v-else>
@@ -33,7 +37,7 @@ export default {
 
       try {
         // Update the API endpoint URL to match your Rails routes
-        const response = await axios.get('http://localhost:3000/api/employees');
+        const response = await axios.get('http://localhost:3000/api/employees'); // Update this URL
         this.employees = response.data;
         console.log('Employees:', this.employees);
       } catch (error) {

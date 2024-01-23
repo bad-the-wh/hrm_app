@@ -26,7 +26,7 @@ export default {
     methods: {
         fetchEmployee() {
             // Replace the following line with your actual API endpoint
-            axios.get(`/api/employees/${this.$route.params.id}`)
+            axios.get(`http:://localhost:3000/api/employees/${this.$route.params.id}`)
                 .then(response => {
                     this.employee = response.data;
                     console.log('Employee:', this.employee);
