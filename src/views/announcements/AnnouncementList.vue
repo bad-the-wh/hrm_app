@@ -10,10 +10,10 @@
             </li>
         </ul>
 
-        <router-link to="http:://localhost:3000/announcements/new">New Announcement</router-link>
+        <router-link to="/announcements/new">New Announcement</router-link>
     </div>
 </template>
-  
+
 <script>
 import axios from 'axios';
 
@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         fetchAnnouncements() {
-            axios.get('/api/announcements')
+            axios.get('http://localhost:3000/api/announcements')
                 .then(response => {
                     this.announcements = response.data;
                     console.log('Announcements:', this.announcements);
@@ -40,8 +40,7 @@ export default {
     },
 };
 </script>
-  
+
 <style scoped>
 /* Your component-specific styles go here */
 </style>
-  

@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         fetchEvaluation() {
-            axios.get(`/api/performance_evaluations/${this.$route.params.id}`)
+            axios.get(`http://localhost:3000/api/performance_evaluations/${this.$route.params.id}`)
                 .then(response => {
                     this.evaluation = response.data;
                     console.log('Performance Evaluation:', this.evaluation);

@@ -3,14 +3,26 @@
   <head>
     <title>HrmApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="csrf-token" content="<%= form_authenticity_token %>" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+
+    <div>
+      <% if user_signed_in? %>
+        <%= button_to "Log Out", destroy_user_session_path, method: :delete %>
+      <%# else %>
+        <%#= link_to "Login", new_user_session_path  %>
+        <%#= linkk_to "Sign Up", new_user_session_path %>
+      <% end %>
+     </div>
+
     <%= yield %>
   </body>
 </html>

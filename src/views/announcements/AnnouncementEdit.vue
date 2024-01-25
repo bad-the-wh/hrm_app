@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         fetchAnnouncement() {
-            axios.get(`http:://localhost:3000/api/announcements/${this.$route.params.id}`)
+            axios.get(`http://localhost:3000/api/announcements/${this.$route.params.id}`)
                 .then(response => {
                     this.announcement = response.data;
                     console.log('Announcement:', this.announcement);
@@ -38,7 +38,7 @@ export default {
                 });
         },
         deleteAnnouncement() {
-            axios.delete(`/api/announcements/${this.$route.params.id}`)
+            axios.delete(`http://localhost:3000/api/announcements/${this.$route.params.id}`)
                 .then(() => {
                     console.log('Announcement deleted successfully');
                     this.$router.push('/announcements');

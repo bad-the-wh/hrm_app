@@ -36,6 +36,13 @@
           <li><router-link to="/announcements/new">New</router-link></li>
         </ul>
       </li>
+
+      <li>
+        <router-link to="/login">Login</router-link>
+      </li>
+
+
+
     </ul>
   </nav>
 </template>
@@ -49,7 +56,7 @@ export default {
 <style scoped>
 /* Add your styling for the navbar */
 nav {
-  background-color: #333;
+  background-color: #16b07c;
   color: white;
 }
 
@@ -67,7 +74,7 @@ li {
 li ul {
   display: none;
   position: absolute;
-  background-color: #555;
+  background-color: #32e69e;
 }
 
 li:hover ul {

@@ -5,7 +5,7 @@
         <ul>
             <li v-for="leaveRequest in leaveRequests" :key="leaveRequest.id">
                 <router-link :to="{ name: 'LeaveRequestDetail', params: { id: leaveRequest.id } }">
-                    {{ leaveRequest.employee.name }}
+                    {{ getEmployeeName(leaveRequest.employeeDetails) }}
                 </router-link>
             </li>
         </ul>
@@ -28,14 +28,34 @@ export default {
     },
     methods: {
         fetchLeaveRequests() {
-            axios.get('http:://localhost:3000/api/leave_requests')
-                .then(response => {
+            axios
+                .get('http://localhost:3000/api/leave_requests')
+                .then((response) => {
                     this.leaveRequests = response.data;
-                    console.log('Leave Requests:', this.leaveRequests);
+                    // Fetch additional details about the employee for each leave request
+                    this.leaveRequests.forEach((leaveRequest) => {
+                        if (leaveRequest.employee_id) {
+                            this.fetchEmployeeDetails(leaveRequest.employee_id, leaveRequest);
+                        }
+                    });
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Error fetching leave requests', error);
                 });
+        },
+        fetchEmployeeDetails(employeeId, leaveRequest) {
+            axios
+                .get(`http://localhost:3000/api/employees/${employeeId}`)
+                .then((response) => {
+                    // Attach employee details to the leave request
+                    leaveRequest.employeeDetails = response.data;
+                })
+                .catch((error) => {
+                    console.error('Error fetching employee details', error);
+                });
+        },
+        getEmployeeName(employeeDetails) {
+            return employeeDetails ? employeeDetails.name : 'No employee';
         },
     },
 };

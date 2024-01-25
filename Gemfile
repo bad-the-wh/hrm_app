@@ -29,7 +29,13 @@ gem "jbuilder"
 #Ensure that your Rails backend allows requests from your Vue.js frontend. You may need to configure Cross-Origin Resource Sharing (CORS) in your Rails app.
 gem 'rack-cors', require: 'rack/cors'
 
+#User login requirements
 gem 'devise'
+
+#User auth for front
+gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
+
+gem 'rack-attack'
 
 
 
@@ -72,3 +78,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "devise-jwt", "~> 0.11.0"

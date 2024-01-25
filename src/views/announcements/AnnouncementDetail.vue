@@ -2,10 +2,18 @@
     <div>
         <h1>{{ announcement.title }}</h1>
 
-        <p>Content: {{ announcement.content }}</p>
-        <p>Published at: {{ announcement.published_at }}</p>
+        <p>Title: {{ announcement.title }}</p>
+        <p>Content: {{ announcement.message }}</p>
 
-        <router-link :to="{ name: 'AnnouncementEdit', params: { id: announcement.id } }">Edit Announcement</router-link>
+        <!-- Display information about the employee who posted the announcement -->
+        <p>Posted by: {{ employeeDetails.name }}</p>
+
+        <!-- Display information about the concerned position -->
+        <p>Concerned Position: {{ employeeDetails.position }}</p>
+
+        <router-link :to="{ name: 'AnnouncementEdit', params: { id: announcement.id } }">
+            Edit Announcement
+        </router-link>
         <router-link to="/announcements">Back to Announcements</router-link>
     </div>
 </template>
@@ -17,6 +25,7 @@ export default {
     data() {
         return {
             announcement: {},
+            employeeDetails: {},
         };
     },
     mounted() {
@@ -24,13 +33,26 @@ export default {
     },
     methods: {
         fetchAnnouncement() {
-            axios.get(`http:://localhost:3000/api/announcements/${this.$route.params.id}`)
-                .then(response => {
+            axios
+                .get(`http://localhost:3000/api/announcements/${this.$route.params.id}`)
+                .then((response) => {
                     this.announcement = response.data;
-                    console.log('Announcement:', this.announcement);
+                    // Fetch additional details about the posted_by employee
+                    this.fetchEmployeeDetails(this.announcement.posted_by_id);
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Error fetching announcement', error);
+                });
+        },
+        fetchEmployeeDetails(employeeId) {
+            axios
+                .get(`http://localhost:3000/api/employees/${employeeId}`)
+                .then((response) => {
+                    this.employeeDetails = response.data;
+                    console.log('Employee Details:', this.employeeDetails);
+                })
+                .catch((error) => {
+                    console.error('Error fetching employee details', error);
                 });
         },
     },

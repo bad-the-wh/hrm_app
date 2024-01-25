@@ -7,3 +7,4 @@ class Announcement < ApplicationRecord
     validates :posted_by, presence: true
     validates :concerned_position, presence: true
   end
+  
