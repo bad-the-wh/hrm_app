@@ -67,30 +67,56 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styling for the navbar */
+/* Navigation Styles */
 nav {
   background-color: #16b07c;
   color: white;
+  padding: 10px;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  display: flex;
 }
 
 li {
-  display: inline-block;
-  margin-right: 10px;
+  margin-right: 20px;
+  position: relative;
+}
+
+li:hover ul {
+  display: block;
+}
+
+li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
 }
 
 li ul {
   display: none;
   position: absolute;
+  top: 100%;
+  left: 0;
   background-color: #32e69e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-li:hover ul {
+li ul li {
+  width: 150px;
+  white-space: nowrap;
+}
+
+li ul li a {
+  padding: 10px;
   display: block;
+}
+
+li ul li:hover {
+  background-color: #158a5a;
 }
 </style>

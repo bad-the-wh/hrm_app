@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="employee-list">
     <h2>Employee List</h2>
 
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading" class="loading">Loading...</div>
 
-    <ul v-else-if="employees.length > 0">
-      <li v-for="employee in employees" :key="employee.id">
-        <router-link :to="{ name: 'EmployeeDetail', params: { id: employee.id } }">
+    <ul v-else-if="employees.length > 0" class="list">
+      <li v-for="employee in employees" :key="employee.id" class="employee-item">
+        <router-link :to="{ name: 'EmployeeDetail', params: { id: employee.id } }" class="employee-link">
           {{ employee.name }} - {{ employee.position }} ({{ employee.LDAP }})
         </router-link>
       </li>
@@ -49,3 +49,42 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.employee-list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+}
+
+.loading {
+  margin-top: 20px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.employee-item {
+  margin: 10px 0;
+}
+
+.employee-link {
+  text-decoration: none;
+  color: #16b07c;
+  transition: color 0.3s;
+}
+
+.employee-link:hover {
+  color: #158a5a;
+}
+</style>

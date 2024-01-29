@@ -1,27 +1,28 @@
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" class="login-form">
         <div>
             <label for="employeeLDAP">Employee LDAP</label>
-            <input v-model="leaveRequest.employee" type="number" id="employeeLDAP" min="100000000" max="999999999" />
+            <input v-model="leaveRequest.employee" type="number" id="employeeLDAP" class="login-form-input" min="100000000"
+                max="999999999" />
         </div>
 
         <div>
             <label for="start_date">Start Date</label>
-            <input v-model="leaveRequest.leave_start_date" type="date" id="start_date" />
+            <input v-model="leaveRequest.leave_start_date" type="date" id="start_date" class="login-form-input" />
         </div>
 
         <div>
             <label for="end_date">End Date</label>
-            <input v-model="leaveRequest.leave_end_date" type="date" id="end_date" />
+            <input v-model="leaveRequest.leave_end_date" type="date" id="end_date" class="login-form-input" />
         </div>
 
         <div>
             <label for="reason">Reason</label>
-            <textarea v-model="leaveRequest.reason" id="reason"></textarea>
+            <textarea v-model="leaveRequest.reason" id="reason" class="login-form-input"></textarea>
         </div>
 
         <div>
-            <button type="submit">Submit</button>
+            <button type="submit" class="login-form-submit">Submit</button>
         </div>
     </form>
 </template>
@@ -57,5 +58,30 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.login-form {
+    margin-top: 20px;
+}
+
+.login-form-input {
+    margin: 8px 0;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-form-submit {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 </style>

@@ -8316,3 +8316,134 @@ Started POST "/api/employees" for ::1 at 2024-01-29 01:42:50 +0100
   
 ActionController::RoutingError (No route matches [POST] "/api/employees"):
   
+Started GET "/member-data" for ::1 at 2024-01-29 02:21:02 +0100
+Started GET "/api/leave_requests" for ::1 at 2024-01-29 02:21:02 +0100
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by MembersController#show as HTML
+Processing by Api::LeaveRequestsController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLeaveRequest Load (1.9ms)[0m  [1m[34mSELECT "leave_requests".* FROM "leave_requests"[0m
+  ↳ app/controllers/api/leave_requests_controller.rb:7:in `index'
+Completed 200 OK in 88ms (Views: 47.7ms | ActiveRecord: 2.2ms | Allocations: 14821)
+
+
+  [1m[36mJwtDenylist Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "jwt_denylist" WHERE "jwt_denylist"."jti" = ? LIMIT ?[0m  [["jti", "0e3a433d-c519-4a6d-82ad-facaa781a73f"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 201ms (ActiveRecord: 2.2ms | Allocations: 24845)
+
+
+Started GET "/users/sign_in" for ::1 at 2024-01-29 02:21:02 +0100
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users/sessions_controller.rb:9:in `respond_with'
+  [1m[36mJwtDenylist Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "jwt_denylist" WHERE "jwt_denylist"."jti" = ? LIMIT ?[0m  [["jti", "0e3a433d-c519-4a6d-82ad-facaa781a73f"], ["LIMIT", 1]]
+  ↳ app/controllers/users/sessions_controller.rb:9:in `respond_with'
+Completed 200 OK in 6ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 2110)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-29 02:21:07 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:7:in `index'
+Completed 200 OK in 21ms (Views: 15.0ms | ActiveRecord: 0.6ms | Allocations: 11113)
+
+
+Started GET "/api/employees/1" for ::1 at 2024-01-29 02:21:09 +0100
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 1239)
+
+
+Started GET "/api/employees/1" for ::1 at 2024-01-29 02:21:14 +0100
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 539)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-29 02:21:17 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:7:in `index'
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.1ms | Allocations: 775)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-29 02:22:22 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:7:in `index'
+Completed 200 OK in 11ms (Views: 8.3ms | ActiveRecord: 0.2ms | Allocations: 775)
+
+
+Started GET "/member-data" for ::1 at 2024-01-29 02:27:51 +0100
+Processing by MembersController#show as HTML
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms | Allocations: 590)
+
+
+Started GET "/api/employees" for ::1 at 2024-01-29 02:27:51 +0100
+Processing by Api::EmployeesController#index as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  ↳ app/controllers/api/employees_controller.rb:7:in `index'
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.1ms | Allocations: 776)
+
+
+Started GET "/users/sign_in" for ::1 at 2024-01-29 02:27:51 +0100
+Processing by Users::SessionsController#new as HTML
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 779)
+
+
+Started GET "/api/leave_requests" for ::1 at 2024-01-29 02:27:53 +0100
+Processing by Api::LeaveRequestsController#index as HTML
+  [1m[36mLeaveRequest Load (0.1ms)[0m  [1m[34mSELECT "leave_requests".* FROM "leave_requests"[0m
+  ↳ app/controllers/api/leave_requests_controller.rb:7:in `index'
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.1ms | Allocations: 653)
+
+
+Started GET "/api/performance_evaluations" for ::1 at 2024-01-29 02:27:57 +0100
+Processing by Api::PerformanceEvaluationsController#index as HTML
+  [1m[36mPerformanceEvaluation Load (0.2ms)[0m  [1m[34mSELECT "performance_evaluations".* FROM "performance_evaluations"[0m
+  ↳ app/controllers/api/performance_evaluations_controller.rb:7:in `index'
+Completed 200 OK in 24ms (Views: 18.7ms | ActiveRecord: 0.5ms | Allocations: 10052)
+
+
+Started GET "/api/employees/1" for ::1 at 2024-01-29 02:27:57 +0100
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 3ms (Views: 0.5ms | ActiveRecord: 0.1ms | Allocations: 541)
+
+
+Started GET "/api/employees/1" for ::1 at 2024-01-29 02:27:57 +0100
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Started GET "/api/employees/2" for ::1 at 2024-01-29 02:27:57 +0100
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 4ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 909)
+
+
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.1ms | Allocations: 537)
+
+
+Started GET "/api/employees/2" for ::1 at 2024-01-29 02:27:57 +0100
+Processing by Api::EmployeesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/employees_controller.rb:44:in `set_employee'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 537)
+
+
+Started GET "/api/announcements" for ::1 at 2024-01-29 02:28:01 +0100
+Processing by Api::AnnouncementsController#index as HTML
+  [1m[36mAnnouncement Load (0.2ms)[0m  [1m[34mSELECT "announcements".* FROM "announcements"[0m
+  ↳ app/controllers/api/announcements_controller.rb:7:in `index'
+Completed 200 OK in 24ms (Views: 18.4ms | ActiveRecord: 0.4ms | Allocations: 9923)
+
+

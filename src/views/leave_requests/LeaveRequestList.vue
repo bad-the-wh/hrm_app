@@ -1,16 +1,17 @@
 <template>
-    <div>
+    <div class="leave-requests-list">
         <h1>Leave Requests</h1>
 
         <ul>
             <li v-for="leaveRequest in leaveRequests" :key="leaveRequest.id">
-                <router-link :to="{ name: 'LeaveRequestDetail', params: { id: leaveRequest.id } }">
+                <router-link :to="{ name: 'LeaveRequestDetail', params: { id: leaveRequest.id } }"
+                    class="leave-request-link">
                     {{ getEmployeeName(leaveRequest.employeeDetails) }}
                 </router-link>
             </li>
         </ul>
 
-        <router-link to="/leave_requests/new">New Leave Request</router-link>
+        <router-link to="/leave_requests/new" class="new-request-link">New Leave Request</router-link>
     </div>
 </template>
   
@@ -62,6 +63,40 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.leave-requests-list {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.leave-request-link,
+.new-request-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #16b07c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.leave-request-link:hover,
+.new-request-link:hover {
+    background-color: #158a5a;
+}
 </style>
   

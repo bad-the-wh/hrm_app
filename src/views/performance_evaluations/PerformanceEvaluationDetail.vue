@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="performance-evaluation-detail">
         <h1>{{ employee_reviewed.name }}</h1>
 
         <p>Score: {{ evaluation.note }}</p>
@@ -13,10 +13,10 @@
 
         <p v-if="evaluation">Date d'évaluation: {{ evaluation.evaluation_date }}</p>
 
-        <router-link :to="{ name: 'PerformanceEvaluationEdit', params: { id: evaluation.id } }">
+        <router-link :to="{ name: 'PerformanceEvaluationEdit', params: { id: evaluation.id } }" class="edit-link">
             Edit Performance Evaluation
         </router-link>
-        <router-link to="/performance_evaluations">Back to Performance Evaluations</router-link>
+        <router-link to="/performance_evaluations" class="back-link">Back to Performance Evaluations</router-link>
     </div>
 </template>
   
@@ -71,5 +71,33 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.performance-evaluation-detail {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.edit-link,
+.back-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #16b07c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.edit-link:hover,
+.back-link:hover {
+    background-color: #158a5a;
+}
 </style>

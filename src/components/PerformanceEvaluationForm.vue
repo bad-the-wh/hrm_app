@@ -1,32 +1,34 @@
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" class="login-form">
         <div>
             <label for="evaluation_date">Evaluation Date</label>
-            <input v-model="performanceEvaluation.evaluation_date" type="date" id="evaluation_date" />
+            <input v-model="performanceEvaluation.evaluation_date" type="date" id="evaluation_date"
+                class="login-form-input" />
         </div>
 
         <div>
             <label for="employee_reviewed">Employee Reviewed (LDAP)</label>
-            <input v-model="performanceEvaluation.employee_reviewed" type="number" id="employee_reviewed" />
+            <input v-model="performanceEvaluation.employee_reviewed" type="number" id="employee_reviewed"
+                class="login-form-input" />
         </div>
 
         <div>
             <label for="reviewer">Reviewer (LDAP)</label>
-            <input v-model="performanceEvaluation.reviewer" type="number" id="reviewer" />
+            <input v-model="performanceEvaluation.reviewer" type="number" id="reviewer" class="login-form-input" />
         </div>
 
         <div>
             <label for="score">Score</label>
-            <input v-model="performanceEvaluation.note" type="number" id="score" />
+            <input v-model="performanceEvaluation.note" type="number" id="score" class="login-form-input" />
         </div>
 
         <div>
             <label for="feedback">Feedback</label>
-            <textarea v-model="performanceEvaluation.commentary" id="feedback"></textarea>
+            <textarea v-model="performanceEvaluation.commentary" id="feedback" class="login-form-input"></textarea>
         </div>
 
         <div>
-            <button type="submit">Submit</button>
+            <button type="submit" class="login-form-submit">Submit</button>
         </div>
     </form>
 </template>
@@ -65,5 +67,30 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.login-form {
+    margin-top: 20px;
+}
+
+.login-form-input {
+    margin: 8px 0;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-form-submit {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 </style>

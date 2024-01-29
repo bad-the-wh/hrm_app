@@ -1,15 +1,17 @@
 <template>
-    <div>
+    <div class="leave-request-detail">
         <h1>{{ getEmployeeName() }}</h1>
 
-        <p>Start Date: {{ leaveRequest.leave_start_date }}</p>
-        <p>End Date: {{ leaveRequest.leave_end_date }}</p>
-        <p>Response: {{ leaveRequest.response }}</p>
+        <div>
+            <p>Start Date: {{ leaveRequest.leave_start_date }}</p>
+            <p>End Date: {{ leaveRequest.leave_end_date }}</p>
+            <p>Response: {{ leaveRequest.response }}</p>
+        </div>
 
-        <router-link :to="{ name: 'LeaveRequestEdit', params: { id: leaveRequest.id } }">
+        <router-link :to="{ name: 'LeaveRequestEdit', params: { id: leaveRequest.id } }" class="edit-link">
             Edit Leave Request
         </router-link>
-        <router-link to="/leave_requests">Back to Leave Requests</router-link>
+        <router-link to="/leave_requests" class="back-link">Back to Leave Requests</router-link>
     </div>
 </template>
   
@@ -63,5 +65,43 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.leave-request-detail {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+div {
+    margin-top: 20px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+.edit-link,
+.back-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #16b07c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.edit-link:hover,
+.back-link:hover {
+    background-color: #158a5a;
+}
 </style>
+  

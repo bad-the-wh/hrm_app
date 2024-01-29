@@ -1,32 +1,33 @@
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" class="login-form">
         <div>
             <label for="employeeLDAP">Employee LDAP</label>
-            <input v-model="announcement.posted_by" type="number" id="employeeLDAP" min="100000000" max="999999999" />
+            <input v-model="announcement.posted_by" type="number" id="employeeLDAP" class="login-form-input" min="100000000"
+                max="999999999" />
         </div>
 
         <div>
             <label for="position">Position</label>
-            <input v-model="announcement.concerned_position" type="text" id="position" />
+            <input v-model="announcement.concerned_position" type="text" id="position" class="login-form-input" />
         </div>
 
         <div>
             <label for="title">Title</label>
-            <input v-model="announcement.title" type="text" id="title" />
+            <input v-model="announcement.title" type="text" id="title" class="login-form-input" />
         </div>
 
         <div>
             <label for="content">Content</label>
-            <textarea v-model="announcement.message" id="content"></textarea>
+            <textarea v-model="announcement.message" id="content" class="login-form-input"></textarea>
         </div>
 
         <div>
             <label for="published_at">Published at</label>
-            <input v-model="announcement.publication_date" type="date" id="published_at" />
+            <input v-model="announcement.publication_date" type="date" id="published_at" class="login-form-input" />
         </div>
 
         <div>
-            <button type="submit">Submit</button>
+            <button type="submit" class="login-form-submit">Submit</button>
         </div>
     </form>
 </template>

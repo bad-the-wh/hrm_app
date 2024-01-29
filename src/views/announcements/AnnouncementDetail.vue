@@ -1,20 +1,24 @@
 <template>
-    <div>
+    <div class="announcement-detail">
         <h1>{{ announcement.title }}</h1>
 
-        <p>Title: {{ announcement.title }}</p>
-        <p>Content: {{ announcement.message }}</p>
+        <div class="announcement-info">
+            <p><strong>Title:</strong> {{ announcement.title }}</p>
+            <p><strong>Content:</strong> {{ announcement.message }}</p>
 
-        <!-- Display information about the employee who posted the announcement -->
-        <p>Posted by: {{ employeeDetails.name }}</p>
+            <!-- Display information about the employee who posted the announcement -->
+            <p><strong>Posted by:</strong> {{ employeeDetails.name }}</p>
 
-        <!-- Display information about the concerned position -->
-        <p>Concerned Position: {{ employeeDetails.position }}</p>
+            <!-- Display information about the concerned position -->
+            <p><strong>Concerned Position:</strong> {{ employeeDetails.position }}</p>
+        </div>
 
-        <router-link :to="{ name: 'AnnouncementEdit', params: { id: announcement.id } }">
-            Edit Announcement
-        </router-link>
-        <router-link to="/announcements">Back to Announcements</router-link>
+        <div class="action-buttons">
+            <router-link :to="{ name: 'AnnouncementEdit', params: { id: announcement.id } }" class="edit-button">
+                Edit Announcement
+            </router-link>
+            <router-link to="/announcements" class="back-button">Back to Announcements</router-link>
+        </div>
     </div>
 </template>
   
@@ -49,7 +53,6 @@ export default {
                 .get(`http://localhost:3000/api/employees/${employeeId}`)
                 .then((response) => {
                     this.employeeDetails = response.data;
-                    console.log('Employee Details:', this.employeeDetails);
                 })
                 .catch((error) => {
                     console.error('Error fetching employee details', error);
@@ -60,6 +63,53 @@ export default {
 </script>
   
 <style scoped>
-/* Your component-specific styles go here */
+.announcement-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+.announcement-info {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-button,
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.edit-button {
+    background-color: #16b07c;
+}
+
+.back-button {
+    background-color: #333;
+}
+
+.edit-button:hover,
+.back-button:hover {
+    background-color: #158a5a;
+}
 </style>
-  
