@@ -16,31 +16,33 @@ module HrmApp
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
-    Rails.application.config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins 'http://localhost:8080' # Replace with the actual URL of your Vue.js app
-        resource '*',
-          headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :options, :head],
-          credentials: true
-      end
-    end
+    # This also configures session_options for use below
+    config.session_store :cookie_store, key: '_interslice_session'
 
-    config.middleware.insert_before(ActionDispatch::Static, Rack::Cors) do
-      allow do
-        origins '*'
-        resource '*', headers: :any, methods: [:get, :post, :options], format: :json
-      end
-    end
+    # Required for all session management (regardless of session_store)
+    config.middleware.use ActionDispatch::Cookies
+
+    config.middleware.use config.session_store, config.session_options
+
+    
+
+    #Rails.application.config.middleware.insert_before 0, Rack::Cors do
+    #  allow do
+    #    origins 'http://localhost:8080' # Replace with the actual URL of your Vue.js app
+    #    resource '*',
+    #      headers: :any,
+    #      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+    #      credentials: true,
+    #      format: :json
+    #  end
+    #end
 
     config.action_controller.default_protect_from_forgery = {
       with: :exception,
       unless: -> { request.format.json? }
     }
 
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
-    config.middleware.use ActionDispatch::Flash
+    
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

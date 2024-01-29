@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    sessions: 'users/sessions'
-  }
-
+  devise_for :users,
+             controllers: {
+               sessions: 'users/sessions',
+               registrations: 'users/registrations'
+             }
+  get '/member-data', to: 'members#show'
   authenticated :user do
     namespace :api do
       resources :employees, except: [:index, :show]
@@ -19,5 +21,5 @@ Rails.application.routes.draw do
     resources :announcements, only: [:index, :show]
   end
 
-  root 'employees#index'
+  root to: 'employees#index'  # Corrected root path
 end

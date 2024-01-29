@@ -9,7 +9,7 @@ class Api::EmployeesController < ApplicationController
       
     def create
       @employee = Employee.new(employee_params)
-      @employee.ldap = generate_random_ldap_entry 
+      @employee.ldap = generate_random_ldap_entry   
       
       if @employee.save
         render json: @employee, status: :created
@@ -50,9 +50,9 @@ class Api::EmployeesController < ApplicationController
     params.require(:employee).permit(:LDAP, :name, :email, :position, :birthdate)
   end
 
-  def generate_random_ldap_entry
+  def generate_random_ldap_entry(name)
     random_number = rand(1_000_000_000..9_999_999_999)
-    @employee.name.downcase.gsub(/\s+/, '') + random_number.to_s
+    name.downcase.gsub(/\s+/, '') + random_number.to_s
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_22_165948) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_25_225427) do
   create_table "announcements", force: :cascade do |t|
     t.date "publication_date"
     t.string "title"
@@ -33,9 +33,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_22_165948) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
   create_table "leave_requests", force: :cascade do |t|
     t.integer "employee_id"
-    t.date "request_date"
+    t.string "reason"
     t.date "leave_start_date"
     t.date "leave_end_date"
     t.string "response", default: "pending"

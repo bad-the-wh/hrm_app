@@ -1,13 +1,18 @@
 <template>
     <form @submit.prevent="submitForm">
         <div>
+            <label for="employeeLDAP">Employee LDAP</label>
+            <input v-model="leaveRequest.employee" type="number" id="employeeLDAP" min="100000000" max="999999999" />
+        </div>
+
+        <div>
             <label for="start_date">Start Date</label>
-            <input v-model="leaveRequest.start_date" type="date" id="start_date" />
+            <input v-model="leaveRequest.leave_start_date" type="date" id="start_date" />
         </div>
 
         <div>
             <label for="end_date">End Date</label>
-            <input v-model="leaveRequest.end_date" type="date" id="end_date" />
+            <input v-model="leaveRequest.leave_end_date" type="date" id="end_date" />
         </div>
 
         <div>
@@ -28,17 +33,16 @@ export default {
     data() {
         return {
             leaveRequest: {
-                start_date: '',
-                end_date: '',
+                employee: 0, // Default value, replace with appropriate default if needed
+                leave_start_date: '',
+                leave_end_date: '',
                 reason: '',
             },
         };
     },
     methods: {
         submitForm() {
-            // Make an axios call to submit the form data
-            // Use a relative URL without the base domain
-            axios.post('/api/leave_requests', this.leaveRequest)
+            axios.post('http://localhost:3000/api/leave_requests', this.leaveRequest)
                 .then(response => {
                     // Handle success if needed
                     console.log('Leave Request submitted successfully', response);
@@ -55,4 +59,3 @@ export default {
 <style scoped>
 /* Your component-specific styles go here */
 </style>
-  

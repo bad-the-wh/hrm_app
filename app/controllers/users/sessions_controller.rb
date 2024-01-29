@@ -1,45 +1,45 @@
-# frozen_string_literal: true
-
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
-  def create
-    super do |user|
-      if request.format.json? && user.errors.empty?
-        render json: { success: true, user: user.as_json(only: [:id, :email]), csrf_token: form_authenticity_token }
-        return
-      end
-    end
+  private
+
+  def respond_with(_resource, _opts = {})
+    render json: {
+      message: 'You are logged in.',
+      user: current_user
+    }, status: :ok
+    set_cors_headers
   end
 
-  def destroy
-    super do
-      render json: { success: true }
-      return
-    end
+  def respond_to_on_destroy
+    log_out_success && return if current_user
+
+    log_out_failure
   end
 
-  # before_action :configure_sign_in_params, only: [:create]
+  def log_out_success
+    render json: { message: 'You are logged out.' }, status: :ok
+  end
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def log_out_failure
+    render json: { message: 'Hmm nothing happened.' }, status: :unauthorized
+  end
 
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  protected
 
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(User)
+      # Customize the full URL where the user is redirected after sign-in
+      return 'http://localhost:8080/employees'
+    end
+    super
+  end
 
-  # protected
+  def set_cors_headers
+    # Allow requests from your frontend application
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Expose-Headers'] = 'Authorization, Uid'
+  end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
 end

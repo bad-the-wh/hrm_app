@@ -37,22 +37,35 @@
         </ul>
       </li>
 
-      <li>
+      <li v-show="!isLoggedIn">
         <router-link to="/login">Login</router-link>
       </li>
-
-
-
+      <li v-show="isLoggedIn">
+        <router-link to="/logout" @click="logout">Logout</router-link>
+      </li>
     </ul>
   </nav>
 </template>
-  
+
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  // Add any additional logic or styling specific to your navbar
+  computed: {
+    ...mapGetters(['isLoggedIn']),
+  },
+  methods: {
+    ...mapActions(['logoutUser']),
+    logout() {
+      // Call the Vuex action to log out the user
+      this.logoutUser();
+      // You can also redirect the user to the login page here if needed
+      // Example: this.$router.push('/login');
+    },
+  },
 };
 </script>
-  
+
 <style scoped>
 /* Add your styling for the navbar */
 nav {
@@ -81,4 +94,3 @@ li:hover ul {
   display: block;
 }
 </style>
-  

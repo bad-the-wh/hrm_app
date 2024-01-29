@@ -9,4 +9,8 @@ class Employee < ApplicationRecord
   has_many :evaluations_received, class_name: 'PerformanceEvaluation', foreign_key: 'employee_reviewed_id'
   has_many :evaluations_given, class_name: 'PerformanceEvaluation', foreign_key: 'reviewer_id'
   has_many :leave_requests, class_name: 'LeaveRequest', foreign_key: 'employee_id'
+
+   def ldap=(value)
+    self[:LDAP] = value
+  end
 end
